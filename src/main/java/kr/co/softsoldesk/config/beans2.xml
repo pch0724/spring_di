@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans.xsd" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns="http://www.springframework.org/schema/beans">
+	   
+	<bean id = "t1" class ="kr.co.softsoldesk.beans2.TestBean" scope = 'prototype'>
+		<property name="data1" value="100"></property>
+		<property name="data2" value="11.11"></property>
+		<property name="data3" value="true"></property>
+		<property name="data4" value="안녕"></property>
+		<!-- 직접 객체 생성 -->
+		<property name="data5">
+			<bean class = "kr.co.softsoldesk.beans2.DataBean"></bean>
+		</property>
+		<!-- 이미 객체를 생성하여 참조하는 주입 -->
+		<property name="data6" ref = 'data_bean'/>
+	</bean>
+	<bean id = "data_bean" class = "kr.co.softsoldesk.beans2.DataBean"/>
+	
+	<!-- 활용 -->
+	<bean id = "tv" class = "kr.co.softsoldesk.beans2.LgTV" scope ="prototype">
+		<property name="price" value = "270000"></property>
+		<property name="speaker" ref = 'appleSpeaker'></property>
+	</bean>
+	<bean id = "tv1" class = "kr.co.softsoldesk.beans2.LgTV" scope ="prototype">
+		<property name="price" value = "270000"></property>
+		<property name="speaker" ref = 'appleSpeaker'></property>
+	</bean>
+	<bean id = "appleSpeaker" class = "kr.co.softsoldesk.beans2.AppleSpeaker"></bean>
+	
+</beans>

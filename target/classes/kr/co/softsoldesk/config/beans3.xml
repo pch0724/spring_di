@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans.xsd" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns="http://www.springframework.org/schema/beans">
+	   
+	<bean id = 't1' class = "kr.co.softsoldesk.beans3.TestBean" scope = "prototype">
+		<!-- Generic = String 인 리스트 -->
+		<!-- list > value > (type = "String") -->
+		<property name="list1">
+			<list>
+				<value>Java</value>
+				<value>Spring</value>
+				<value>Python</value>
+			</list>
+		</property>
+		
+		<!-- Generic = Integer 인 리스트 -->
+		<!-- list > value > type 부여 필요 -->
+		<!--
+		<property name="list2">
+			<list>
+				<value type="int">10</value>			
+				<value type="int">20</value>			
+				<value type="int">30</value>			
+			</list>
+		</property>
+		-->
+		<property name="list2">
+			<list value-type="int">
+				<value>10</value>			
+				<value>20</value>			
+				<value>30</value>			
+			</list>
+		</property>
+		
+		<!-- Generic = DataBean 인 리스트 -->
+		<property name="list3">
+			<list>
+				<!-- 객체 직접 주입 -->
+				<bean class = "kr.co.softsoldesk.beans3.DataBean"/>
+				<bean class = "kr.co.softsoldesk.beans3.DataBean"/>
+				<!-- 이미 선언된 객체를 참조(ref bean= 'data_bean') -->
+				<ref bean="data_bean"/>
+				<ref bean="data_bean"/>
+				<ref bean="data_bean1"/>
+				<ref bean="data_bean1"/>
+			</list>		
+		</property> 
+		
+		<!-- Generic = String인 Set -->
+		<property name="set1">
+			<set>
+				<value>Java</value>
+				<value>Spring</value>
+				<value>JSP</value>
+				<value>JavaScript</value>
+				<value>Python</value>
+				<value>Python</value>
+			</set>
+		</property>
+		<!-- Generic = integer인 Set -->
+		<property name="set2">
+			<set value-type="int">
+				<value>10</value>			
+				<value>10</value>			
+				<value>20</value>			
+				<value>30</value>			
+				<value>40</value>			
+				<value>50</value>			
+			</set>
+		</property>
+		<!-- Generic = DataBean인 Set -->
+		<property name="set3">
+			<set>
+				<!-- 객체 직접 주입 -->
+				<bean class = "kr.co.softsoldesk.beans3.DataBean"/>
+				<bean class = "kr.co.softsoldesk.beans3.DataBean"/>
+				<!-- 
+				이미 선언된 객체를 참조(ref bean= 'data_bean') 
+				set은 같은 id를 사용하는 경우 
+				scope = "prototype"이여도 같은 주소로 반환하므로 중복을 혀용하지않음
+				-->
+				<ref bean="data_bean"/>
+				<ref bean="data_bean"/>
+				<ref bean="data_bean"/>
+				<ref bean="data_bean"/>
+				<ref bean="data_bean1"/>
+				<ref bean="data_bean1"/>
+			</set>		
+		</property> 
+
+		<property name="map1">
+			<map>
+				<entry key="a1" value="soft"></entry>
+				<entry key="a2" value="100" value-type="int"></entry>
+				<!-- 클래스 -->
+				<entry key="a3">
+					<bean class = "kr.co.softsoldesk.beans3.DataBean"/>
+				</entry>
+				<!-- 이미 정의된 객체 참조 -->
+				<entry key="a4" value-ref="data_bean"/>
+				<!-- 리스트 -->
+				<entry key="a5">
+					<list>
+						<value>Java</value>
+						<value>JSP</value>
+						<value>JavaScript</value>
+						<value>Spring</value>
+						<value>Python</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+		<!-- property 등록 -->
+		<property name="prop1">
+			<props>
+				<prop key="p1">soft</prop>
+				<prop key="p2">Soldesk</prop>
+				<prop key="p3">BigData</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id = "addr" class = "kr.co.softsoldesk.beans3.CollectionBean">
+		<property name="addressList">
+			<list>
+				<value>서울시 종로구 관철동</value>
+				<value>서울시 성동구 행당동</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id ="data_bean" class = "kr.co.softsoldesk.beans3.DataBean"/>
+	<bean id ="data_bean1" class = "kr.co.softsoldesk.beans3.DataBean" scope="prototype"/>
+	
+	
+</beans>
