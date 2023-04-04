@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans.xsd" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns="http://www.springframework.org/schema/beans"
+	   default-autowire="byName">
+	
+	<!-- TestBean1에서 DataBean1을 참조하기 위해 DataBean1 클래스의 data_bean1 객체 생성(참조용) -->
+	<bean id = "data_bean1" class ="kr.co.softsoldesk.beans4.DataBean1" scope = "prototype"/>
+
+	<!-- setter를 이용한 주입 -->
+	<bean id = 'obj1' class = "kr.co.softsoldesk.beans4.TestBean1">
+		<property name="data1" ref="data_bean1"/>
+		<property name="data2" ref="data_bean1"/>
+	</bean>
+
+	<!-- byName을 이용한 주입 : bean 클래스 내의 변수 이름과 매칭하여 주입  -->
+	<bean id = 'obj2' class = "kr.co.softsoldesk.beans4.TestBean1" autowire="byName"/> 
+		<bean id = "data1" class = "kr.co.softsoldesk.beans4.DataBean1"/>
+		<bean id = "data2" class = "kr.co.softsoldesk.beans4.DataBean1"/>
+	
+	<!-- byType을 이용한 주입 : 동일 타입 중복 선언 시 오류 발생 -->
+	<bean id = "obj3" class = "kr.co.softsoldesk.beans4.TestBean2" autowire="byType"/>
+		<!-- <bean class = "kr.co.softsoldesk.beans4.DataBean2" scope = "prototype"/> -->
+		<!-- <bean class = "kr.co.softsoldesk.beans4.DataBean2" scope = "prototype"/> : 중복 선언 시 모호성으로 인한 에러 발생 --> 
+	
+	<!-- 생성자를 이용한 일반 주입법 -->
+	<bean id = "data_bean2" class = "kr.co.softsoldesk.beans4.DataBean2"/>
+	<bean id = "obj4" class = "kr.co.softsoldesk.beans4.TestBean3">
+		<constructor-arg ref="data_bean2" index="0"/>	
+		<constructor-arg ref="data_bean2" index="1"/>	
+	</bean>
+	
+	<!-- 생성자를 이용한 자동 주입법 -->
+	<bean id = "obj5" class = "kr.co.softsoldesk.beans4.TestBean3" autowire="constructor"/>
+	
+	<!-- 생성자의 매개변수 4개 일반주입 -->
+	<bean id = "obj6" class = "kr.co.softsoldesk.beans4.TestBean3">
+    	<constructor-arg value="100" type="int" index="0"/>
+        <constructor-arg value="project1" index="1"/>
+        <constructor-arg ref="data_bean2" index="2"/>
+        <constructor-arg ref="data_bean2" index="3"/>         
+    </bean>
+         
+    <!-- 생성자의 매개변수 4개 자동주입 -->
+    <bean id= "obj7" class="kr.co.softsoldesk.beans4.TestBean3" autowire="constructor">
+        <constructor-arg value="100" type="int" index="0"/>
+        <constructor-arg value="project2" index="1"/>         
+    </bean>
+
+	<!-- 자동주입하지 않고 사용할 시 default-autowire = "byName" 선언 -->
+	<bean id = 'obj8' class = "kr.co.softsoldesk.beans4.TestBean1" autowire="byName"/> 
+
+	<!-- default-autowire = "byName" 선언이 되었을 시 참조하고 싶지 않음 -->
+	<bean id = 'obj9' class = "kr.co.softsoldesk.beans4.TestBean1" autowire="no"/> 
+	
+</beans>
